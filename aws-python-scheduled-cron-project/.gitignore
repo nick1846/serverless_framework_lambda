@@ -1,5 +1,4 @@
 .serverless
 *.pyc
 *.pyo
-env_variables/*
 node_modules
