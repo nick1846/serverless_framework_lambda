@@ -57,5 +57,5 @@ jobs:
 
       # Deploy Lambda
       - name: Deploy Lambda
-        working-directory: aws-python-scheduled-cron-project/
+        working-directory: $GITHUB_WORKSPACE/serverless_framework_lambda/aws-python-scheduled-cron-project/
         run: sls deploy
