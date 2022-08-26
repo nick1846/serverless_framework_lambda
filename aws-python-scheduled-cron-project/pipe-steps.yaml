@@ -1,0 +1,15 @@
+#install the serverless CLI as a standalone binary instead.
+curl -o- -L https://slss.io/install | bash
+#upgrade to the latest
+serverless upgrade
+
+#install python, venv, pip
+sudo apt update
+sudo apt install python3.8
+sudo apt install python3-venv python3-pip
+
+#install python dependencies
+pip install -r requirements.txt
+
+#deploy lambda
+sls deploy --param="domain=$(DOMAIN)" --param="key=$(VALUE)"

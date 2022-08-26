@@ -1,0 +1,46 @@
+service: aws-python-scheduled-cron-project
+
+frameworkVersion: '3'
+
+custom:
+  topicARN: ${file(env_variables/env.${opt:stage, 'dev'}.json):TOPIC_ARN}
+
+provider:
+  name: aws
+  runtime: python3.8
+  region: us-east-2
+  iam:
+    role:
+      name: ${sls:stage}-lambda-for-rds-snapshot-role
+      statements:
+        - Effect: Allow
+          Action:
+            - 'rds:AddTagsToResource'
+            - 'rds:CreateDBSnapshot'
+            - 'rds:DeleteDBSnapshot'
+            - 'rds:DescribeDBSnapshots'
+            - 'rds:ModifyDBSnapshotAttribute'
+          Resource: '*'
+        - Effect: Allow
+          Action:
+            - 'sns:Publish'
+          Resource: '${self:custom.topicARN}'
+
+functions:
+  # rateHandler:
+  #   handler: handler.run
+  #   events:
+  #     # Invoke Lambda function every minute
+  #     - schedule: rate(1 minute)
+  rdsSnapshot:
+    name: ${sls:stage}-create-share-delete-rds-snapshot
+    handler: handler.lambda_handler
+    timeout: 300
+    environment:
+      DB_IDENTIFIER: ${file(env_variables/env.${opt:stage, 'dev'}.json):DB_IDENTIFIER}
+      DB_REGION: ${file(env_variables/env.${opt:stage, 'dev'}.json):DB_REGION}
+      SHARED_ACCOUNT: ${file(env_variables/env.${opt:stage, 'dev'}.json):SHARED_ACCOUNT}
+      TOPIC_ARN: ${file(env_variables/env.${opt:stage, 'dev'}.json):TOPIC_ARN}
+    events:
+      # Invoke Lambda function every 2nd minute from Mon-Fri
+      - schedule: cron(0/10 * ? * MON-FRI *)
