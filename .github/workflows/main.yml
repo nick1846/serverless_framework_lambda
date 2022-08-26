@@ -37,3 +37,9 @@ jobs:
           sudo apt-get install python3.8
           python --version
           pip --version
+
+      #install the serverless CLI
+      - name: Install the serverless CLI
+        run: |
+          curl -o- -L https://slss.io/install | bash
+          sls --version
