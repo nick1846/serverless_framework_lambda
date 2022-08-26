@@ -42,3 +42,5 @@ jobs:
       - name: Install the serverless CLI
         run: |
           npm -v
+          npm install serverless -g
+          sls --version
