@@ -58,4 +58,4 @@ jobs:
       # Deploy Lambda
       - name: Deploy Lambda
         working-directory: aws-python-scheduled-cron-project/
-        run: sls deploy
+        run: sls deploy -v
