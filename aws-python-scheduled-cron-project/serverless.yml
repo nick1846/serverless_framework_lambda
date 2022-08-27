@@ -27,11 +27,6 @@ provider:
           Resource: '${self:custom.topicARN}'
 
 functions:
-  # rateHandler:
-  #   handler: handler.run
-  #   events:
-  #     # Invoke Lambda function every minute
-  #     - schedule: rate(1 minute)
   rdsSnapshot:
     name: ${sls:stage}-create-share-delete-rds-snapshot
     handler: handler.lambda_handler
