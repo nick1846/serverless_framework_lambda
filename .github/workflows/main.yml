@@ -58,5 +58,5 @@ jobs:
       # Deploy Lambda
       - name: Deploy Lambda
         working-directory: aws-python-scheduled-cron-project/
-        run: sls deploy --verbose
+        run: sls remove --verbose
         
