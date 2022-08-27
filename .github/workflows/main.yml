@@ -52,5 +52,5 @@ jobs:
       - name: Deploy Lambda
         uses: actions/checkout@v3
         working-directory: aws-python-scheduled-cron-project/
-        run: sls deploy --verbose
+        run: sls -v
         
