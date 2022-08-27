@@ -3,7 +3,7 @@ service: aws-python-scheduled-cron-project
 frameworkVersion: '3'
 
 custom:
-  topicARN: ${file(env_variables/env.${opt:stage, 'dev'}.json):TOPIC_ARN}
+  topicARN: ${ssm:/DevTools/LambdaSNS}
 
 provider:
   name: aws
@@ -40,7 +40,7 @@ functions:
       DB_IDENTIFIER: ${file(env_variables/env.${opt:stage, 'dev'}.json):DB_IDENTIFIER}
       DB_REGION: ${file(env_variables/env.${opt:stage, 'dev'}.json):DB_REGION}
       SHARED_ACCOUNT: ${file(env_variables/env.${opt:stage, 'dev'}.json):SHARED_ACCOUNT}
-      TOPIC_ARN: ${file(env_variables/env.${opt:stage, 'dev'}.json):TOPIC_ARN}
+      TOPIC_ARN: ${self:custom.topicARN}
     events:
       # Invoke Lambda function every 2nd minute from Mon-Fri
       - schedule: cron(0/10 * ? * MON-FRI *)
