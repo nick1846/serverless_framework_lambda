@@ -2,6 +2,9 @@ service: aws-python-scheduled-cron-project
 
 frameworkVersion: '3'
 
+plugins:
+  - serverless-python-requirements
+
 custom:
   topicARN: ${ssm:/DevTools/LambdaSNS}
 
@@ -39,3 +42,4 @@ functions:
     events:
       # Invoke Lambda function every 2nd minute from Mon-Fri
       - schedule: cron(0/10 * ? * MON-FRI *)
+
